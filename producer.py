@@ -4,21 +4,21 @@ from kafka import KafkaProducer
 
 hostname = "localhost"
 port = 9092
-topic_name = "10_parti_topic"
+topic_name = "t1"
 
 producer = KafkaProducer(
     api_version=(2, 6),
     bootstrap_servers=hostname + ":" + str(port),
     value_serializer=lambda
-        v: json.dumps(v).encode('ascii'),
+        v: json.dumps(v).encode('utf-8'),
     key_serializer=lambda
-        v: json.dumps(v).encode('ascii')
+        v: json.dumps(v).encode('utf-8')
 )
-for x in range(1000):
+for x in range(500):
     producer.send(
         topic_name,
-        key={"id": 3},
-        value={"name": " This is me", "pizza": f"Yummz {x}"}
+        key=None,
+        value={"name": "", "key": f"value {x}"}
     )
 
     producer.flush()
